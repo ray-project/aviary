@@ -2,22 +2,14 @@
 
 Go on bird watch right now: [🦜🔍 Aviary 🦜🔍](http://aviary.anyscale.com/)
 
-Aviary is an app that lets you interact with a variety of 
+Aviary is an app that lets you interact and deploy 
 large language models (LLMs) in a single place. 
 You can compare the outputs of different models directly, rank them by quality,
 get a cost and latency estimate, and more. In particular, it offers good support for 
 Transformer models hosted on [Hugging Face](http://hf.co) and in many cases also 
-supports [DeepSpeed](https://www.deepspeed.ai/) inference acceleration.
-
-Aviary also supports continuous batching by integrating with [Hugging Face text-generation-inference](https://github.com/huggingface/text-generation-inference)
-(an optional dependency). Continuous batching allows you to get much better throughput and latency than static batching.
+supports [DeepSpeed](https://www.deepspeed.ai/) inference acceleration. 
 
 Aviary is built on top of [Ray](https://ray.io) by [Anyscale](https://anyscale.com).
-It's an [open source project](https://github.com/ray-project/aviary), which means
-that you can deploy it yourself to a cloud service, 
-or simply use our [hosted version](http://aviary.anyscale.com/).
-If you would like to use a managed version of Aviary specific to your company,
-please [reach out to us](mailto:mwk@anyscale.com).
 
 ## Table of Contents
 
@@ -53,26 +45,6 @@ For bugs or for feature requests, please submit them [here](https://github.com/r
 
 We have people in both US and European time zones who will help answer your questions. 
 
-## Contributions
-We are also interested in accepting contributions. Those could be anything from a new evaluator, to integrating a new model with a yaml file, to more.
-Feel free to post an issue first to get our feedback on a proposal first, or just file a PR and we commit to giving you prompt feedback.
-
-## Getting Help and Filing Bugs / Feature Requests
-
-We are eager to help you get started with Aviary. You can get help on: 
-
-- Via Slack -- fill in [this form](https://docs.google.com/forms/d/e/1FAIpQLSfAcoiLCHOguOm8e7Jnn-JJdZaCxPGjgVCvFijHB5PLaQLeig/viewform) to sign up. 
-- Via [Discuss](https://discuss.ray.io/c/llms-generative-ai/27). 
-
-For bugs or for feature requests, please submit them [here](https://github.com/ray-project/aviary/issues/new).
-
-We have people in both US and European time zones who will help answer your questions. 
-
-## Contributions
-
-We are also interested in accepting contributions. Those could be anything from a new evaluator, to integrating a new model with a yaml file, to more.
-Feel free to post an issue first to get our feedback on a proposal first, or just file a PR and we commit to giving you prompt feedback.
-
 # Aviary User Guides
 
 For a video introduction, see the following intro. Note: There have been some minor changes since the video was recorded. The guide below is more up to date. 
@@ -81,77 +53,8 @@ For a video introduction, see the following intro. Note: There have been some mi
 
 ## Deploy Aviary 
 
-The guide below walks you through a minimal installation of Aviary for use on an 
-Open Source cloud deployment. 
-
-### Set up your laptop
-
-You will need `ray` and `aviary` to be installed on your laptop. `ray` has to be
-the [latest nightly version](https://docs.ray.io/en/latest/ray-overview/installation.html#daily-releases-nightlies).
-
-
-```shell
-# The link below WILL CHANGE dependning on your platform and python version
-# See https://docs.ray.io/en/latest/ray-overview/installation.html#daily-releases-nightlies
-pip install -U https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-3.0.0.dev0-cp310-cp310-manylinux2014_x86_64.whl
-pip install "aviary @ git+https://github.com/ray-project/aviary.git"
-```
-
-The default Aviary installation only includes the Aviary CLI and SDK.
-
-To install the Aviary UI, use the following command. This will
-enable you to run the Aviary frontend on your laptop.
-
-```shell
-pip install "aviary[frontend] @ git+https://github.com/ray-project/aviary.git"
-```
-
-### Start a Ray Cluster
-
-Deploy is currently only supported on AWS. 
-**Make sure you have exported your AWS credentials locally.**
-
-```bash
-export AWS_ACCESS_KEY_ID=...
-export AWS_SECRET_ACCESS_KEY=...
-export AWS_SESSION_TOKEN=...
-```
-
-Start by cloning this repo to your local machine.
-
-You may need to specify your AWS private key in the `deploy/ray/aviary-cluster.yaml` file.
-See [Ray on Cloud VMs](https://docs.ray.io/en/latest/cluster/vms/index.html) page in
-Ray documentation for more details.
-
-```shell
-git clone https://github.com/ray-project/aviary.git
-cd aviary
-
-# Start a Ray Cluster (This will take a few minutes to start-up)
-ray up deploy/ray/aviary-cluster.yaml
-```
-
-If you want to use continous batching, edit `deploy/ray/aviary-cluster.yaml` replacing
-```yaml
-docker:
-    image: "anyscale/aviary:latest"
-```
-
-with
-
-```yaml
-docker:
-    image: "anyscale/aviary:latest-tgi"
-```
-
-### Connect to your Cluster
-
-```shell
-# Connect to the Head node of your Ray Cluster (This will take several minutes to autoscale)
-ray attach deploy/ray/aviary-cluster.yaml
-
 # Deploy the LightGPT model. 
-aviary run --model ./models/static_batching/amazon--LightGPT.yaml
+aviary run --model ./models/amazon--LightGPT.yaml
 ```
 
 You can deploy any model in the `models` directory of this repo, 
@@ -369,31 +272,6 @@ Aviary allows you to easily add new models by adding a single configuration file
 To learn more about how to customize or add new models, 
 see the [Aviary Model Registry](models/README.md).
 
-## Contributing
-
-If you want to help improve or extend the Aviary, please get in touch with us!
-You can [reach us via email](mailto:mwk@anyscale.com) for feedback and suggestions,
-or [open an issue](https://github.com/ray-project/aviary/issues/new) on GitHub.
-Pull requests are also welcome!
-
-We use `pre-commit` hooks to ensure that all code is formatted correctly.
-Make sure to `pip install pre-commit` and then run `pre-commit install`.
-You can also run `./format` to run the hooks manually.
-
-## Running tests
-
-To run the tests, you need to install the `test` dependencies:
-
-```shell
-pip install -e .[test]
-```
-
-and then simply run `pytest`:
-
-```shell
-pytest .
-```
-
 ## Known issues
 
 Aviary is still in early development, and there are a few known issues:
@@ -403,9 +281,13 @@ chosen to focus on simplicity and readability for the first release. Ray and Ray
 are framework-agnostic and Aviary can be easily modified to use FasterTransformer
 or other high-performance frameworks. We will continue working on improving this.
 * `lmsys/vicuna-13b-delta-v1.1` model sometimes answers to English questions in Mandarin.
+* Replicas which have had a worker failure will continue to receive new requests, which
+will most likely time out. We are looking into fixing that.
 
 ## Future plans
 
+* Streaming support.
+* Support for Continuous/Iterative Batching.
 * LangChain + LlamaIndex Integration (which will make it much easier to compare open and closed LLMs).
 * Better testing.
 * Improved documentation.

@@ -1,0 +1,53 @@
+head_node_type:
+  name: head-node-type
+  instance_type: m5.xlarge
+  resources:
+    cpu:
+    gpu:
+    memory:
+    object_store_memory:
+    custom_resources:
+      head_node: 1
+      accelerator_type_cpu: 1
+worker_node_types:
+- name: gpu-worker-g5
+  instance_type: g5.12xlarge
+  resources:
+    cpu:
+    gpu:
+    memory:
+    object_store_memory:
+    custom_resources:
+      worker_node: 1
+      accelerator_type_a10: 1
+  min_workers: 0
+  max_workers: 8
+  use_spot: true
+  fallback_to_ondemand: true
+- name: gpu-worker-p3
+  instance_type: p3.8xlarge
+  resources:
+    cpu:
+    gpu:
+    memory:
+    object_store_memory:
+    custom_resources:
+      worker_node: 1
+      accelerator_type_v100: 1
+  min_workers: 0
+  max_workers: 4
+  use_spot: true
+  fallback_to_ondemand: true
+- name: cpu-worker
+  instance_type: m5.xlarge
+  resources:
+    cpu:
+    gpu:
+    memory:
+    object_store_memory:
+    custom_resources:
+      worker_node: 1
+      accelerator_type_cpu: 1
+  min_workers: 0
+  max_workers: 16
+  use_spot: false
