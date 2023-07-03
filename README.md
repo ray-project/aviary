@@ -54,6 +54,7 @@ For a video introduction, see the following intro. Note: There have been some mi
 ## Deploy Aviary 
 
 # Deploy the LightGPT model. 
+```
 aviary run --model ./models/amazon--LightGPT.yaml
 ```
 
