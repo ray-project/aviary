@@ -49,7 +49,9 @@ For a video introduction, see the following intro. Note: There have been some mi
 [![Watch the video](https://img.youtube.com/vi/WmqPfQOXJ-4/0.jpg)](https://www.youtube.com/watch?v=WmqPfQOXJ-4)
 
 ## Deploy Aviary 
+Use the aviary CLI to deploy a model:
 
+```
 # Deploy the LightGPT model. 
 ```
 aviary run --model ./models/static_batching/amazon--LightGPT.yaml
