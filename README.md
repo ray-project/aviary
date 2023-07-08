@@ -2,8 +2,7 @@
 
 Go on bird watch right now: [🦜🔍 Aviary 🦜🔍](http://aviary.anyscale.com/)
 
-Aviary is an app that lets you interact and deploy 
-large language models (LLMs) in a single place. 
+Aviary is an app that lets you interact and deploy large language models (LLMs) in a single place. 
 You can compare the outputs of different models directly, rank them by quality,
 get a cost and latency estimate, and more. In particular, it offers good support for 
 Transformer models hosted on [Hugging Face](http://hf.co) and in many cases also 
@@ -49,17 +48,15 @@ For a video introduction, see the following intro. Note: There have been some mi
 [![Watch the video](https://img.youtube.com/vi/WmqPfQOXJ-4/0.jpg)](https://www.youtube.com/watch?v=WmqPfQOXJ-4)
 
 ## Deploy Aviary 
-Use the aviary CLI to deploy a model:
+From the terminal use the aviary CLI to deploy a model:
 
-```
+```shell
 # Deploy the LightGPT model. 
-```
 aviary run --model ./models/static_batching/amazon--LightGPT.yaml
 ```
 
 You can deploy any model in the `models` directory of this repo, 
 or define your own model YAML file and run that instead.
-
 
 ### Query Aviary
 
