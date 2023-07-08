@@ -17,9 +17,6 @@ Aviary is built on top of [Ray](https://ray.io) by [Anyscale](https://anyscale.c
 * [Contributions](#Contributions)
 * [Aviary User Guides](#Aviary-User-Guides)
 	* [Deploy Aviary ](#Deploy-Aviary)
-		* [Set up your laptop](#Set-up-your-laptop)
-		* [Start a Ray Cluster](#Start-a-Ray-Cluster)
-		* [Connect to your Cluster](#Connect-to-your-Cluster)
 		* [Query Aviary](#Query-Aviary)
 * [Aviary Reference](#Aviary-Reference)
 	* [Installing Aviary](#Installing-Aviary)
@@ -55,7 +52,7 @@ For a video introduction, see the following intro. Note: There have been some mi
 
 # Deploy the LightGPT model. 
 ```
-aviary run --model ./models/amazon--LightGPT.yaml
+aviary run --model ./models/static_batching/amazon--LightGPT.yaml
 ```
 
 You can deploy any model in the `models` directory of this repo, 
@@ -273,6 +270,31 @@ Aviary allows you to easily add new models by adding a single configuration file
 To learn more about how to customize or add new models, 
 see the [Aviary Model Registry](models/README.md).
 
+## Contributing
+
+If you want to help improve or extend the Aviary, please get in touch with us!
+You can [reach us via email](mailto:mwk@anyscale.com) for feedback and suggestions,
+or [open an issue](https://github.com/ray-project/aviary/issues/new) on GitHub.
+Pull requests are also welcome!
+
+We use `pre-commit` hooks to ensure that all code is formatted correctly.
+Make sure to `pip install pre-commit` and then run `pre-commit install`.
+You can also run `./format` to run the hooks manually.
+
+## Running tests
+
+To run the tests, you need to install the `test` dependencies:
+
+```shell
+pip install -e .[test]
+```
+
+and then simply run `pytest`:
+
+```shell
+pytest .
+```
+
 ## Known issues
 
 Aviary is still in early development, and there are a few known issues:
@@ -282,13 +304,9 @@ chosen to focus on simplicity and readability for the first release. Ray and Ray
 are framework-agnostic and Aviary can be easily modified to use FasterTransformer
 or other high-performance frameworks. We will continue working on improving this.
 * `lmsys/vicuna-13b-delta-v1.1` model sometimes answers to English questions in Mandarin.
-* Replicas which have had a worker failure will continue to receive new requests, which
-will most likely time out. We are looking into fixing that.
 
 ## Future plans
 
-* Streaming support.
-* Support for Continuous/Iterative Batching.
 * LangChain + LlamaIndex Integration (which will make it much easier to compare open and closed LLMs).
 * Better testing.
 * Improved documentation.
